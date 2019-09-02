@@ -1,0 +1,114 @@
+
+      <div class="accordion" id="accordion">
+          @foreach($categories as $category)
+            <div class="card pb-1"style='background: aliceblue;'>
+              <div class="card-header" id="a{{$category->id}}">
+                <h2 class="mb-0">
+                  <button class="btn btn-link  text-capitalize w-100 " type="button" data-toggle="collapse" data-target="#collapse{{$category->id}}" aria-expanded="true" aria-controls="collapse{{$category->id}}" style='text-align:start'>
+                    <span> {{$category->name}}</span> 
+                    <i class='fas fa-arrow-circle-down' style='float: right;font-size: 25px;color: black;'></i>
+                  </button>
+                 
+                </h2>
+              </div>  <!--header -->
+              <div id="collapse{{$category->id}}" class="collapse " aria-labelledby="a{{$category->id}}" data-parent="#accordion">
+                <div class="card-body p-1 text-capitalize float-right " style='width:97%'>
+                  <div class="accordion" id="accordion{{$category->id}}">
+                    @foreach($category->products as $product)
+                      <div class="card-header p-0 m-0" id="ab{{$product->id}}">
+                        <h2 class="mb-0 rounded  mt-2" style='background:#6ad3d6;padding:4px'>
+                         
+                          <button class="btn btn-link  text-capitalize collapsed" type="button" data-toggle="collapse" data-target="#collapse{{$product->id}}" aria-expanded="false" aria-controls="collapse{{$product->id}}">
+                            <span class='d-inline-block text-dark '  style='width: 300px; text-align: start;font-weight:bold'>{{$product->name}}</span>
+                            <i class='fas fa-arrow-circle-down' style='margin-left: 10px;'></i>
+                          </button>
+
+                          <div class="buttons float-right d-inline-block">
+                             <button class='btn btn-warning' onclick = "window.location = '/admin/product/Edit/{{$product->id}}'">
+                                <i class='fas fa-edit'></i>
+                               <span>Edit</span>
+                             </button>
+                             <!-- Button trigger modal -->
+                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong{{$product->id}}">
+                                  <i class='fas fa-trash-alt'></i>
+                                  <span>Delete</span>
+                              </button>
+
+                                  <!-- Modal -->
+                                  <div class="modal fade" id="exampleModalLong{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle{{$product->id}}" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content" style='background: whitesmoke;'>
+                                          <div class="modal-header">
+                                              <h5 class="modal-title" id="exampleModalLongTitle{{$product->id}}">Delete</h5>
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                              </button>
+                                          </div>
+
+                                        <div class="modal-body p-0">
+                                            <div class="alert alert-danger m-0 h6">
+                                                are you sure you want to delete =>  <strong>{{$product->name}}</strong> 
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                                            <button type="button" class="btn btn-danger" onclick="window.location ='/admin/product/Delete/{{$product->id}}'">Yes</button>
+                                        </div>
+
+                                    </div>
+                                  </div>
+                             </div>   
+                          </div>  
+                        </h2>
+                      </div>  <!--header -->
+
+                      <div id="collapse{{$product->id}}" class="collapse" aria-labelledby="ab{{$product->id}}" data-parent="#accordion{{$category->id}}">
+                        <div class="card-body mt-2 rounded text-white" style='background: #45ab7e'>
+                          
+                            <div class="form-group">
+                              <label for="price" class='d-block'>price</label>
+                              <input class='form-control bg-white' id='price' value="{{$product->price}}" disabled>
+                            </div>
+                          
+                            <div class="form-group">
+                              <label for="description" class='d-block'>Description of <strong class='text-dark'>{{$product->name}}</strong> </label>
+                              <div  class = 'form-control bg-white' style='height:fit-content'>{!! $product->description!!}</div>
+                            </div>
+                          
+                            <div class="form-group">
+                              <label for="image" class='d-block'>images for {{$product->name}}</label>
+                              <img  class = 'mt-3 rounded' src="{{asset('images/product')}}/{{$product->image}}">
+                            </div> 
+                          
+                            <div class="form-group">
+                              <label for="breif" class='d-block' > breif for product</label>
+                              <textarea  class = 'form-control bg-white' name="" id="brief" cols="30" rows="2"disabled>{{$product->brief}}</textarea>
+                            </div>
+                          
+                            <div class="form-group">
+                              <label for="amount" class='d-block'>Amount in Stock </label>
+                              <input type="text" class='form-control bg-white ' value="{{$product->amount}}" disabled>
+                            </div>
+                        
+                            <div class="form-group">
+                              <label for="discount" class='d-block'>discount for this product</label>
+                              <input type="text" class='form-control bg-white' disabled value='{{$product->discount}}'>
+                            </div>
+                          
+                          </div><!-- Card body -->
+                        
+                      </div> <!-- End collapse -->
+                       
+                    @endforeach
+                  </div>
+                </div> <!-- End card body -->
+                
+              </div><!-- End collapse Category->id -->
+              
+            </div><!-- End Card -->
+            
+          @endforeach
+       </div>
+
+
